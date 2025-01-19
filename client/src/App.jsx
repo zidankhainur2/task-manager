@@ -7,10 +7,12 @@ import Trash from "./pages/Trash";
 import TaskDetail from "./pages/TaskDetail";
 import { Toaster } from "sonner";
 import Sidebar from "./components/Sidebar";
+import Navbar from "./components/Navbar";
+import { useSelector } from "react-redux";
 
 function Layout() {
-  const user = true;
-  // const { user } = useSelector((state) => state.auth);
+  // const user = true;
+  const { user } = useSelector((state) => state.auth);
   const location = useLocation();
 
   return user ? (
@@ -21,8 +23,8 @@ function Layout() {
 
       {/* Mobile sidebar */}
 
-      <div className="flex flex-1 overflow-y-auto">
-        {/* Navbar */}
+      <div className="flex-1 overflow-y-auto">
+        <Navbar />
         <div className="p-4 2xl:px-10">
           <Outlet />
         </div>
