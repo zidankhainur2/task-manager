@@ -2,6 +2,7 @@ import { MdOutlineSearch } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenSidebar } from "../redux/slices/authSlice";
 import UserAvatar from "./UserAvatar";
+import NotificationPanel from "./NotificationPanel";
 
 const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
@@ -29,7 +30,7 @@ const Navbar = () => {
       </div>
 
       <div className="flex gap-2 items-center">
-        {/* <NotificationPanel /> */}
+        <NotificationPanel />
 
         <UserAvatar />
       </div>
