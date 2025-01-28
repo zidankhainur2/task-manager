@@ -8,9 +8,57 @@ import { LuClipboard } from "react-icons/lu";
 import { FaNewspaper, FaUsers } from "react-icons/fa";
 import { FaArrowsToDot } from "react-icons/fa6";
 import moment from "moment";
-import { summary } from "../assets/data";
+import { summary, tasks } from "../assets/data";
 import clsx from "clsx";
 import Chart from "../components/Chart";
+import { TASK_TYPE } from "../utils";
+
+const TaskTable = ({ tasks }) => {
+  const ICONS = {
+    high: <MdKeyboardDoubleArrowUp />,
+    medium: <MdKeyboardArrowUp />,
+    low: <MdKeyboardArrowDown />,
+  };
+
+  const TableHeader = () => (
+    <thead className="border-b border-gray-300 ">
+      <tr className="text-black text-left">
+        <th className="py-2">Task Title</th>
+        <th className="py-2">Priority</th>
+        <th className="py-2">Team</th>
+        <th className="py-2 hidden md:block">Created At</th>
+      </tr>
+    </thead>
+  );
+
+  const TableRow = ({ task }) => (
+    <tr className="border-b border-gray-300 text-gray-600 hover:bg-gray-300/10">
+      <td className="py-2">
+        <div className="flex items-center gap-2">
+          <div
+            className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
+          />
+
+          <p className="text-base text-black">{task.title}</p>
+        </div>
+      </td>
+    </tr>
+  );
+  return (
+    <>
+      <div className="w-full md:w-2/3 bg-white px-2 md:px-4 pt-4 pb-4 shadow-md rounded">
+        <table className="w-full">
+          <TableHeader />
+          <tbody>
+            {tasks?.map((task, id) => (
+              <TableRow key={id} task={task} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+};
 
 const Dashboard = () => {
   const totals = summary.tasks;
@@ -79,6 +127,14 @@ const Dashboard = () => {
           Chart by Priority
         </h4>
         <Chart />
+      </div>
+
+      <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
+        {/* /left */}
+
+        <TaskTable tasks={summary.last10Task} />
+
+        {/* RIGHT */}
       </div>
     </div>
   );
